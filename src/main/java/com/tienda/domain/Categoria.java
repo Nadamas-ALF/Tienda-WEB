@@ -21,6 +21,10 @@ import lombok.Data;
      private String rutaImagen;
      private boolean activo;
 
+    public Categoria() {
+    }
+
+     
     public Categoria(String descripcion, boolean activo) {
         this.descripcion = descripcion;
         this.activo = activo;
