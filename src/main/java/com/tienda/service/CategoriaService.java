@@ -1,4 +1,3 @@
- 
 package com.tienda.service;
 
 import com.tienda.domain.Categoria;
@@ -19,4 +18,3 @@ public interface CategoriaService {
     // Se elimina el categoria que tiene el id pasado por parámetro
     public void delete(Categoria categoria);
 }
-

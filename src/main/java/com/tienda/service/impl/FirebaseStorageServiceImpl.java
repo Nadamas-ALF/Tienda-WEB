@@ -1,6 +1,4 @@
-
 package com.tienda.service.impl;
-
 
 import com.google.auth.Credentials;
 import com.google.auth.ServiceAccountSigner;
@@ -75,5 +73,3 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
         return String.format("%019d", id);
     }
 }
-
-
