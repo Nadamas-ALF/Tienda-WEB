@@ -26,4 +26,8 @@ public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, do
     
     //Lista de productos utilizando consultas con SQL Nativo
     public List<Producto> metodoNativo(double precioInf, double precioSup);
+    
+    //TAREA INDIVIDUAL
+    List<Producto> findByDescripcionContainingIgnoreCase(String descripcion);
+    
 }

@@ -11,6 +11,10 @@ public interface ProductoDao extends JpaRepository<Producto, Long> {
     
     //Ejemplo de metodo utilizando Query <!-- VISTO EN CLASE SEM9--> 
     public List<Producto> findByPrecioBetweenOrderByDescripcion(double precioInf, double precioSup); 
+    
+    
+    //Ejemplo de metodo utilizando Query <!-- TAREA INDIVIDUAL--> 
+    public List<Producto> findByDescripcionContainingIgnoreCase(String descripcion);
            
     //Ejemplo de método utilizando Consultas con JPQL <!-- VISTO EN CLASE SEM9--> 
     @Query(value="SELECT a FROM Producto a where a.precio BETWEEN :precioInf AND :precioSup ORDER BY a.descripcion ASC")

@@ -83,5 +83,14 @@ public class PruebasController {
         return "/pruebas/listado2";
     }
     
+
+@GetMapping("/buscar")
+public String buscarProductos(@RequestParam("descripcion") String descripcion, Model model) {
+    var productos = productoService.findByDescripcionContainingIgnoreCase(descripcion);
+    model.addAttribute("productos", productos);
+    model.addAttribute("totalProductos", productos.size()); 
+    return "/pruebas/listado2";
+}
+    
     
 }

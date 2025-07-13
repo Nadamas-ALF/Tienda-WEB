@@ -77,6 +77,12 @@
         <section th:fragment="filtros" class="bg-light">
             <div class="row py-2">
                 <div class="col-md-1"></div>
+         
+                <form action="/pruebas/buscar" method="get" class="d-flex mb-3">
+                    <input type="text" name="descripcion" class="form-control me-2" placeholder="Buscar producto...">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+ 
                 <div class="col-md-3">
                     <form method="POST" th:action="@{/pruebas/query1}" 
                           class="was-validated">
@@ -159,6 +165,7 @@
                         </div>
                     </form>
                 </div>
+
 
                 
             </div>
