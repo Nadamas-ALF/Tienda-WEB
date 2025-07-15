@@ -8,7 +8,7 @@
     <body>
         <!-- 1 Sección para crear el boton de agregar... llamará a una ventana modal-->
         <section th:fragment="botonesAgregar" class="py-4 mb-4 bg-light">
-            <div class="container">
+            <div class="container" sec:authorize="hasRole('ROLE_ADMIN')">
                 <div class="row">
                     <div class="col-md-3">   
                         <button 
@@ -41,7 +41,7 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="idCategoria">[[#{producto.categoria}]]</label>
-                                    <select name="categoria.idCategoria"
+                                    <select name="idCategoria"
                                             class="form-select">
                                         <option th:each="c : ${categorias}" th:value="${c.idCategoria}" th:text="${c.descripcion}">
                                         </option>    
@@ -82,7 +82,6 @@
             </div>
         </section>
 
-        
         <!-- 3 Sección principal para mostrar la informaccion de la entidad producto -->​
         <section th:fragment="listadoProductos" id="productos">​
             <div class="container">​
@@ -107,11 +106,38 @@
                                         <tr th:each="producto, contador : ${productos}">​
                                             <td class="text-center">[[${contador.count}]]</td>​
                                             <td class="fs-6">[[${producto.descripcion}]]</td>​
-                                            <td class="text-end">[[${#numbers.formatDecimal(producto.precio, 1, 'DEFAULT', 2, 'DEFAULT')}]]</td>​
-                               </section>​
-              
-              
-
+                                        <td class="text-end">[[${#numbers.formatDecimal(producto.precio, 1, 'DEFAULT', 2, 'DEFAULT')}]]</td>​
+                                            <td class="text-center">[[${producto.existencias}]]</td>​
+                                            <td class="text-end">[[${#numbers.formatDecimal(producto.precio*producto.existencias, 1, 'DEFAULT', 2, 'DEFAULT')}]]</td>​
+             <td  class="text-center" th:text="${producto.activo} ? 'Activa' : 'Inactiva'"/>​
+                                            <td>[[${producto.categoria.descripcion}]]</td>​
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                                <a th:href="@{/producto/eliminar/}+${producto.idProducto}"​
+                                                   class="btn btn-danger">​
+                                                    <i class="fas fa-trash"></i> [[#{accion.eliminar}]]</a></td>​
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')">​
+                                                <a th:href="@{/producto/modificar/}+${producto.idProducto}"​
+                                                   class="btn btn-success">​
+                                                    <i class="fas fa-pencil"></i> [[#{accion.actualizar}]]</a></td></tr>​
+                                    </tbody>​
+                                </table>​
+                            </div>​
+                            <div class="text-center p-2" th:if="${productos == null or productos.empty}">​
+                                <span>[[#{lista.vacia}]]</span>​
+                            </div>​
+                        </div>​
+                    </div>​
+                    <div class="col-md-2">​
+                        <div class="card text-center bg-success text-white mb-3">​
+                            <div class="card-body">​
+                                <h3>[[#{producto.total}]]</h3>​
+                                <h4 class="fs-2"><i class="fas fa-users"></i> [[${totalProductos}]]</h4>​
+                            </div>​
+                        </div>​
+                    </div>​
+                </div>​
+            </div>​
+        </section>​
 
 
         <!-- 4 Fragmento que se utiliza en la página modifca.html -->
@@ -136,20 +162,14 @@
                                                 <h4>[[#{accion.actualizar}]]</h4>
                                             </div>
                                             <div class="card-body">
-                                                
                                             <div class="mb-3">
-                                                
-                                                <label for="idCategoria">[[#{producto.categoria}]]</label>    
-                                                <select th:field="*{categoria.idCategoria}"
+                                                <label for="idCategoria">[[#{producto.categoria}]]</label>
+                                                <select name="idCategoria" th:field="*{categoria.idCategoria}"
                                                     class="form-select">
                                                     <option th:each="c : ${categorias}" th:value="${c.idCategoria}" th:text="${c.descripcion}">
                                                     </option>    
                                                 </select>
-                                                
- 
-                                            </div>    
-                                                
-                                                
+                                            </div>                                                   
                                                 <div class="mb-3">
                                                     <label for="descripcion">[[#{producto.descripcion}]]</label>
                                                     <input type="text" class="form-control" 
@@ -179,7 +199,7 @@
                                                            th:field="*{activo}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="imagen">[[#{producto.Imagen}]]</label>
+                                                    <label for="imagen">[[#{producto.imagen}]]</label>
                                                     <input class="form-control" type="file" name="imagenFile"
                                                            onchange="readURL(this);" />
                                                     <img id="blah" th:src="@{${producto.rutaImagen}}" alt="your image" height="200"/>
